@@ -1,0 +1,17 @@
+{
+  "name": "nasdaq-viz",
+  "authors": [
+    "C3NZ <cenz@cenz.io>"
+  ],
+  "description": "visualizing the nasdaq",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
