@@ -3,7 +3,6 @@
   "timeout": 120000,
   "registry": {
     "search": [
-      "http://localhost:8000",
       "https://registry.bower.io"
     ]
   }
