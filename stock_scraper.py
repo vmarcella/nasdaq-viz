@@ -27,11 +27,11 @@ def retrieve_stocks():
     # set columns using the first element in the processed csv
     # besides the last index in the list (Garbage)
     columns = processed_text[:1][0].rstrip().split(",")[:-1]
-    dataframe.columns = columns
 
-    # Convert all the rows into a dictionary
-    stock_dict = {"stocks": []}
-    for _, row in dataframe.iterrows():
-        stock_dict["stocks"].append({col: row[col] for col in dataframe.columns})
+    # Format the columns to have no spaces and to all be lowercas
+    fmted_cols = []
+    for col in columns:
+        fmted_cols.append(col.strip().lower())
 
+    dataframe.columns = fmted_cols
     return dataframe
