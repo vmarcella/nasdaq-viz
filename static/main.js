@@ -5,7 +5,7 @@ $(function() {
 });
 
 function createGraph() {
-  const width = 1400;
+  const width = 1200;
   const height = 900;
   const format = d3.format(",d"); // specify a decimal format that also allows values to be grouped by commas
   // Color scale generated from i want hue (need 20 colors)
@@ -36,9 +36,9 @@ function createGraph() {
 
   // Create a scaling function
   const getCircleRadius = d3
-    .scalePow()
+    .scaleLinear()
     .domain([0, 400])
-    .range([0, 75]);
+    .range([20, 60]);
 
   // Construct the svg to render the drawing to
   const svg = d3
@@ -51,9 +51,6 @@ function createGraph() {
   // Fetch the stock data to plot to the svg
   d3.json("/get_stocks").then(function(quotes) {
     console.log(quotes.children[0]["lastsale"]);
-    const nodes = d3.hierarchy(quotes).sum(function(stock) {
-      return Number(stock["lastsale"]);
-    });
 
     // D3 version 5.0 uses d3.pack() instead of d3.layout.pack()
     const bubble = d3
@@ -65,6 +62,10 @@ function createGraph() {
         console.log(d);
         return 5 + getCircleRadius(d.value / 2) * 1;
       });
+
+    const nodes = d3.hierarchy(quotes).sum(function(stock) {
+      return Number(stock["lastsale"]);
+    });
 
     const node = svg
       .selectAll(".node")
@@ -82,13 +83,11 @@ function createGraph() {
     node
       .append("circle")
       .attr("r", function(data) {
-        console.log(data);
         return data.r;
       })
-      .attr("fill", function(data, extra) {
-        console.log(data);
-        console.log(extra);
-        return colors(extra);
+      .attr("fill", function(data, index) {
+        // fill each node based on it's index
+        return colors(index);
       });
 
     node
