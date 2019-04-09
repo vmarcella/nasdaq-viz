@@ -1,8 +1,11 @@
 """
     Flask application for Stock visualizations
 """
+import sys
+
 from flask import Flask, jsonify, render_template
 
+import utils
 from stock_scraper import retrieve_stocks
 
 app = Flask(__name__)
@@ -21,19 +24,33 @@ def get_stocks():
     """
         Get the stock data
     """
-    dataframe = retrieve_stocks()
     # Convert all the rows into a dictionary
-    stock_dict = {"stocks": []}
+    stock_dict = {"children": []}
 
     # iterate through all of thee rows in the dataframe
-    for _, row in dataframe.iterrows():
+    for _, row in app.dataframe.iterrows():
         curr_stock = {}
-        for col in dataframe.columns:
+        for col in app.dataframe.columns:
             curr_stock[col] = row[col]
-        stock_dict["stocks"].append(curr_stock)
+        stock_dict["children"].append(curr_stock)
 
     return jsonify(stock_dict), 200
 
 
+def main():
+    """
+        Main application handler
+    """
+    print(sys.argv)
+    if len(sys.argv) >= 2:
+
+        app.dataframe = utils.load_dataframe("df.pickle")
+        app.run(debug=True)
+    else:
+        app.dataframe = retrieve_stocks()
+        utils.save_dataframe(app.dataframe, "df.pickle")
+        app.run()
+
+
 if __name__ == "__main__":
-    app.run(debug=True)
+    main()
