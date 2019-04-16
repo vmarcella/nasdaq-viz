@@ -8,6 +8,7 @@ function createGraph() {
   const width = 1200;
   const height = 900;
   const format = d3.format(",d"); // specify a decimal format that also allows values to be grouped by commas
+
   // Color scale generated from i want hue (need 20 colors)
   const colors = d3
     .scaleOrdinal()
@@ -80,16 +81,44 @@ function createGraph() {
         return "translate(" + data.x + "," + data.y + ")";
       });
 
+    // Style the tooltip
+    const tooltip = d3
+      .select("body")
+      .append("div")
+      .style("position", "absolute")
+      .style("z-index", "10")
+      .style("visibility", "hidden")
+      .style("color", "white")
+      .style("padding", "8px")
+      .style("background-color", "rgba(0,0,0, 0.75)")
+      .style("border-radius", "6px")
+      .style("font", "16px sans-serif")
+      .text("tooltip");
+
+    // append the circle to the node
     node
       .append("circle")
-      .attr("r", function(data) {
-        return data.r;
+      .attr("r", function(node) {
+        return node.r;
       })
-      .attr("fill", function(data, index) {
+      .attr("fill", function(node, index) {
         // fill each node based on it's index
         return colors(index);
+      })
+      .on("mouseover", function(node) {
+        tooltip.text(node.data.name + ": $" + node.data.lastsale);
+        tooltip.style("visibility", "visible");
+      })
+      .on("mousemove", function(node) {
+        tooltip
+          .style("top", d3.event.pageY - 10 + "px")
+          .style("left", d3.event.pageX + 10 + "px");
+      })
+      .on("mouseout", function() {
+        tooltip.style("visibility", "hidden");
       });
 
+    // Label the node (bubble) with the
     node
       .append("text")
       .attr("dy", ".3em")

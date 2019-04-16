@@ -41,9 +41,8 @@ def main():
     """
         Main application handler
     """
-    print(sys.argv)
+    # in debug mode, use the cached dataframe
     if len(sys.argv) >= 2:
-
         app.dataframe = utils.load_dataframe("df.pickle")
         app.run(debug=True)
     else:
