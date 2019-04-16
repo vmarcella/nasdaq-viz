@@ -8,6 +8,7 @@ def retrieve_stocks():
 
         Returns a dataframe
     """
+    # Get the csv file
     request = requests.get(
         "http://www.nasdaq.com/quotes/nasdaq-100-stocks.aspx?render=download"
     )
@@ -17,6 +18,7 @@ def retrieve_stocks():
     dataframe_rows = []
 
     # convert each line into an element inside of the list
+    # skip the first line, as it contains the columns.
     for line in processed_text[1:]:
         row = line.split(",")[:-1]
         dataframe_rows.append(row)
@@ -33,5 +35,6 @@ def retrieve_stocks():
     for col in columns:
         fmted_cols.append(col.strip().lower())
 
+    # Assign the columns of the dataframe to be the formatted columns
     dataframe.columns = fmted_cols
     return dataframe

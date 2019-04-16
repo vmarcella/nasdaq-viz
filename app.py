@@ -27,13 +27,16 @@ def get_stocks():
     # Convert all the rows into a dictionary
     stock_dict = {"children": []}
 
-    # iterate through all of thee rows in the dataframe
+    # iterate through all of the rows in the dataframe
     for _, row in app.dataframe.iterrows():
         curr_stock = {}
+        # Get all of the rows for the current stock
         for col in app.dataframe.columns:
             curr_stock[col] = row[col]
+        # Append the current stock to the parent dictionary
         stock_dict["children"].append(curr_stock)
 
+    # Jsonify output, return a 200 status code
     return jsonify(stock_dict), 200
 
 
