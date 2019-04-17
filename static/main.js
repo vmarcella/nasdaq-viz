@@ -51,10 +51,10 @@ function createGraph() {
     .attr("class", "bubble");
 
   // Fetch the stock data to plot to the svg
-  d3.json("/get_stocks").then(function(quotes) {
+  d3.json("/get_stocks").then(function(stocks) {
     // D3 version 5.0 uses d3.pack() instead of d3.layout.pack()
     // pack is what creates the alyout for the bubble
-    const nodes = d3.hierarchy(quotes).sum(function(stock) {
+    const nodes = d3.hierarchy(stocks).sum(function(stock) {
       return Number(stock["lastsale"]);
     });
 
@@ -84,6 +84,20 @@ function createGraph() {
       .attr("transform", function(data) {
         return "translate(" + data.x + "," + data.y + ")";
       });
+
+    // Style the tooltip (all css)
+    const tooltip = d3
+      .select("body")
+      .append("div")
+      .style("position", "absolute")
+      .style("z-index", "10")
+      .style("visibility", "hidden")
+      .style("color", "white")
+      .style("padding", "8px")
+      .style("background-color", "rgba(0,0,0, 0.75)")
+      .style("border-radius", "6px")
+      .style("font", "16px sans-serif")
+      .text("tooltip");
 
     // append the circle to the node
     node
@@ -121,17 +135,8 @@ function createGraph() {
         return data.data.symbol;
       });
   });
-  // Style the tooltip (all css)
-  const tooltip = d3
-    .select("body")
-    .append("div")
-    .style("position", "absolute")
-    .style("z-index", "10")
-    .style("visibility", "hidden")
-    .style("color", "white")
-    .style("padding", "8px")
-    .style("background-color", "rgba(0,0,0, 0.75)")
-    .style("border-radius", "6px")
-    .style("font", "16px sans-serif")
-    .text("tooltip");
 }
+
+d3.json("/get_stocks").then(function(stocks) {
+  // stocks will be handled in here
+});
