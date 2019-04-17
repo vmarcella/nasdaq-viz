@@ -16,7 +16,7 @@ def index():
     """
         Get the index page
     """
-    return render_template("index.html")
+    return render_template("index.html"), 200
 
 
 @app.route("/get_stocks")
