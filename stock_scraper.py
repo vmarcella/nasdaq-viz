@@ -1,3 +1,6 @@
+"""
+    stock scraping app
+"""
 import pandas as pd
 import requests
 

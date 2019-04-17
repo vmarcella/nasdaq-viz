@@ -1,7 +1,6 @@
 """
     Utility file for handling extraneous features
 """
-import pickle
 
 import pandas as pd
 
