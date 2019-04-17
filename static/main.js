@@ -136,7 +136,3 @@ function createGraph() {
       });
   });
 }
-
-d3.json("/get_stocks").then(function(stocks) {
-  // stocks will be handled in here
-});
