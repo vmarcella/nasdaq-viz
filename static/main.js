@@ -36,12 +36,6 @@ function createGraph() {
       "#db7a80"
     ]);
 
-  // Create a scaling function for scaling all values that are passed in into a range of our choice.
-  const getCircleRadius = d3
-    .scaleLinear()
-    .domain([0, 400])
-    .range([20, 60]);
-
   // Construct the svg to render the drawing to
   const svg = d3
     .select("#chart")
@@ -54,9 +48,21 @@ function createGraph() {
   d3.json("/get_stocks").then(function(stocks) {
     // D3 version 5.0 uses d3.pack() instead of d3.layout.pack()
     // pack is what creates the alyout for the bubble
+    let max = 0;
     const nodes = d3.hierarchy(stocks).sum(function(stock) {
-      return Number(stock["lastsale"]);
+      const value = Number(stock["share_volume"]) * Number(stock["lastsale"]);
+      if (value > max) {
+        max = value;
+      }
+      return value;
     });
+
+    // Create a scaling function for scaling all values that are passed in into a range of our choice.
+    const getCircleRadius = d3
+      .scalePow()
+      .exponent(3)
+      .domain([0, max])
+      .range([40, 120]);
 
     // D3 version 5.0 uses d3.pack() instead of d3.layout.pack()
     // pack is what creates the layout
@@ -65,8 +71,8 @@ function createGraph() {
       .size([width, height])
       .padding(1)
       .radius(function(node) {
-        console.log(node);
-        return 5 + getCircleRadius(node.value / 2) * 1;
+        console.log(getCircleRadius(node.value));
+        return 5 + getCircleRadius(node.value);
       });
 
     // Select all individual nodes and apply styling to them.
@@ -103,6 +109,7 @@ function createGraph() {
     node
       .append("circle")
       .attr("r", function(node) {
+        console.log(node.r);
         return node.r;
       })
       .attr("fill", function(node, index) {
@@ -111,7 +118,7 @@ function createGraph() {
       })
       .on("mouseover", function(node) {
         // Add text to the tooltip and make it visible
-        tooltip.text(node.data.name + ": $" + node.data.lastsale);
+        tooltip.text(node.data.name + ": $" + node.value);
         tooltip.style("visibility", "visible");
       })
       .on("mousemove", function(node) {
