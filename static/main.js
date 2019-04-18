@@ -63,7 +63,7 @@ function createGraph() {
       .scalePow()
       .exponent(3)
       .domain([0, max])
-      .range([40, 120]);
+      .range([30, 140]);
 
     // D3 version 5.0 uses d3.pack() instead of d3.layout.pack()
     // pack is what creates the layout
@@ -118,7 +118,7 @@ function createGraph() {
       })
       .on("mouseover", function(node) {
         // Add text to the tooltip and make it visible
-        tooltip.text(node.data.name + ": $" + node.value);
+        tooltip.text(node.data.name + ": $" + format(node.value));
         tooltip.style("visibility", "visible");
       })
       .on("mousemove", function(node) {
