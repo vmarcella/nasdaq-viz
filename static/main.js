@@ -49,6 +49,7 @@ function createGraph() {
     // D3 version 5.0 uses d3.pack() instead of d3.layout.pack()
     // pack is what creates the alyout for the bubble
     let max = 0;
+
     const nodes = d3.hierarchy(stocks).sum(function(stock) {
       const value = Number(stock["share_volume"]) * Number(stock["lastsale"]);
       if (value > max) {
@@ -71,7 +72,6 @@ function createGraph() {
       .size([width, height])
       .padding(1)
       .radius(function(node) {
-        console.log(getCircleRadius(node.value));
         return 5 + getCircleRadius(node.value);
       });
 
