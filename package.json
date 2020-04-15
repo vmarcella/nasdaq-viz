@@ -1,0 +1,19 @@
+{
+  "name": "nasdaq-viz",
+  "version": "1.0.0",
+  "description": "Visualizing the nasdaq",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/C3NZ/nasdaq-viz.git"
+  },
+  "author": "C3NZ",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/C3NZ/nasdaq-viz/issues"
+  },
+  "homepage": "https://github.com/C3NZ/nasdaq-viz#readme"
+}
