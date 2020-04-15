@@ -15,5 +15,10 @@
   "bugs": {
     "url": "https://github.com/C3NZ/nasdaq-viz/issues"
   },
-  "homepage": "https://github.com/C3NZ/nasdaq-viz#readme"
+  "homepage": "https://github.com/C3NZ/nasdaq-viz#readme",
+  "dependencies": {
+    "bootstrap": "^4.3.1",
+    "d3": "^5.9.2",
+    "jquery": "^3.3.1"
+  }
 }
