@@ -46,8 +46,6 @@ function createGraph() {
 
   // Fetch the stock data to plot to the svg
   d3.json("/get_stocks").then(function(stocks) {
-    // D3 version 5.0 uses d3.pack() instead of d3.layout.pack()
-    // pack is what creates the alyout for the bubble
     let max = 0;
 
     const nodes = d3.hierarchy(stocks).sum(function(stock) {
